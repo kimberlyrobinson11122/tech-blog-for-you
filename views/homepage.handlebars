@@ -1,15 +1,54 @@
-{{#each blogs as |blog| }}
-<div class="row mb-4 blog">
-  <div class="col-md-5">
-    <h2>
-      <a href="/blog/{{blog.id}}">{{blog.title}}</a>
-    </h2>
-    <p>Written by {{blog.author}} on {{blog.publication_date}}</p>
-  </div>
-  <div class="col-md-7">
-    <p>
-      {{blog.description}}
-    </p>
-  </div>
-</div>
-{{/each}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Blog</title>
+
+
+  <style>
+    h1, h2 {
+      margin-bottom: 10px; 
+    }
+
+    .blog-list {
+      margin-top: 10px; 
+    }
+
+    .blog-post {
+      margin-bottom: 20px; 
+      padding-bottom: 20px; 
+      border-bottom: 1px solid #5c6a9c; 
+    }
+  </style>
+
+
+</head>
+<body>
+
+  <h1 class="text-center">Welcome to the Tech Blog!</h1>
+  <p></p>
+
+  <h2>All Blogs:</h2>
+  <p></p>
+
+  {{#if blogs.length}}
+    <div class="blog-list">
+      {{#each blogs}}
+        <div class="blog-post">
+          <h3>{{title}}</h3>
+          <p>Written by {{user.name}}</p> 
+          <p>{{createdAt}}</p>
+          <p>{{description}}</p>
+          <a href="/blog/{{id}}">Read More</a>
+        </div>
+      {{/each}}   
+    </div>
+  {{else}}
+    <p>No blogs found.</p>
+  {{/if}}
+  <p></p>
+
+  <script src="./js/your-script.js"></script>
+</body>
+</html>
