@@ -2,13 +2,9 @@
   <h2>{{title}}</h2>
   <p>{{{get_emoji}}}</p>
   <p>{{description}}</p>
-  <p>Written by {{author}} on {{publication_date}}</p>
+  <p>Written by {{author}} on {{formatDate publication_date}}</p>
+ 
   <p>
-    <span for="img" aria-label="money">💲</span>
-    <span class="dollar-amount">{{format_amount needed_funding}}</span>
-    needed
-  </p>
-  <p>
-    <button class="btn btn-primary">Fund this Project!</button>
+    <button class="btn btn-primary add-comment-btn" data-blog-id="{{id}}">Add Comment</button>
   </p>
 </div>
