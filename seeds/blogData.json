@@ -1,0 +1,20 @@
+[
+  {
+    "title": "The Rise of AI in Everyday Life",
+    "description": "Exploring how artificial intelligence is being integrated into daily activities and what the future holds.",
+    "author": "Jane Doe",
+    "publication_date": "2024-07-01"
+  },
+  {
+    "title": "Understanding Cybersecurity Threats",
+    "description": "An in-depth look at the most common cybersecurity threats and how to protect yourself.",
+    "author": "John Smith",
+    "publication_date": "2024-06-25"
+  },
+  {
+    "title": "The Evolution of Database Technologies",
+    "description": "A historical overview of database technologies and their advancements over the years.",
+    "author": "Alice Johnson",
+    "publication_date": "2024-07-05"
+  }
+]
