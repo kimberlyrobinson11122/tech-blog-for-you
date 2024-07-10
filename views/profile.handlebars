@@ -16,41 +16,38 @@
       </div>
       <div class="form-group">
         <label for="blog-author">Author:</label>
-        <input class="form-input" type="text" id="blog-author" name="blog-author" />
+        <input class="form-input" type="text" id="blog-author" name="blog-author" value="{{name}}" readonly />
       </div>
       <div class="form-group">
         <label for="blog-description">Description:</label>
         <textarea class="form-input" id="blog-description" name="blog-description"></textarea>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary create-blog-btn">Create</button>
       </div>
     </form>
   </div>
 
-  {{#if blogs.length}}
-    <div class="col-md-6 blog-list">
-      <h3>Your Blog Posts:</h3>
+  <div class="col-md-6 blog-list">
+    <h3>Your Blog Posts:</h3>
 
-      {{#each blogs as |blog|}}
+    {{#if userBlogs.length}}
+      {{#each userBlogs as |blog|}}
         <div class="row mb-2">
           <div class="col-md-8">
             <h4><a href="/blog/{{blog.id}}">{{blog.title}}</a></h4>
-            <p>Written by {{blog.author}} on {{formatDate blog.publication_date}}</p> <!-- Ensure formatDate helper is correctly implemented -->
-            <!-- Add a button to add comments -->
+            <p>Written by {{blog.author}} on {{formatDate blog.publication_date}}</p>
             <button class="btn btn-sm btn-secondary add-comment-btn" data-blog-id="{{blog.id}}">Add Comment</button>
           </div>
           <div class="col-md-4">
             <button class="btn btn-sm btn-danger delete-blog-btn" data-id="{{blog.id}}">DELETE</button>
           </div>
         </div>
-        <!-- Optionally include a comment form here if you want to show it initially -->
-        <!-- Example: <form class="form new-comment-form" style="display: none;"> ... </form> -->
       {{/each}}
-    </div>
-  {{else}}
-    <p>No blogs found.</p>
-  {{/if}}
+    {{else}}
+      <p>No blogs found.</p>
+    {{/if}}
+  </div>
 </div>
 
-<script src="./js/profile.js"></script>
+<script src="/js/profile.js"></script>
