@@ -64,7 +64,6 @@ router.get('/profile', withAuth, async (req, res) => {
     // Find the logged-in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Blog }],
     });
 
     if (!userData) {
@@ -74,8 +73,17 @@ router.get('/profile', withAuth, async (req, res) => {
 
     const user = userData.get({ plain: true });
 
+    // Find all blogs belonging to the logged-in user
+    const blogData = await Blog.findAll({
+      where: { user_id: req.session.user_id },
+      include: [{ model: User, attributes: ['name'] }],
+    });
+
+    const blogs = blogData.map((blog) => blog.get({ plain: true }));
+    console.log("blogs ", blogs)
     res.render('profile', {
       ...user,
+      blogs,
       logged_in: true
     });
   } catch (err) {
@@ -96,4 +104,3 @@ router.get('/login', (req, res) => {
 });
 
 module.exports = router;
-
