@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tech Blog</title>
 
-
   <style>
     h1, h2 {
       margin-bottom: 10px; 
@@ -22,7 +21,6 @@
     }
   </style>
 
-
 </head>
 <body>
 
@@ -37,8 +35,8 @@
       {{#each blogs}}
         <div class="blog-post">
           <h3>{{title}}</h3>
-          <p>Written by {{user.name}}</p> 
-          <p>{{createdAt}}</p>
+          <p>Written by {{author}}</p> 
+          <p>{{publication_date}}</p>
           <p>{{description}}</p>
           <a href="/blog/{{id}}">Read More</a>
         </div>
@@ -49,6 +47,6 @@
   {{/if}}
   <p></p>
 
-  <script src="./js/your-script.js"></script>
+<script src="/js/profile.js"></script>
 </body>
 </html>
