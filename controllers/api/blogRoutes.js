@@ -10,7 +10,8 @@ router.post('/', withAuth, async (req, res) => {
     if (!title || !description || !author) {
       return res.status(400).json({ message: 'Title, description, and author are required fields.' });
     }
-
+    console.log("userid, " , req.session.user_id);
+    
     // Create new blog post linked to the current user
     const newBlog = await Blog.create({
       title,
