@@ -1,46 +1,44 @@
-const newFormHandler = async (event) => {
-  event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+  // Handle form submission for creating a new blog post
+  document.querySelector('.new-blog-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-  const title = document.querySelector('#blog-title').value.trim();
-  const content = document.querySelector('#blog-content').value.trim();
+    const titleInput = document.getElementById('blog-title');
+    const authorInput = document.getElementById('blog-author');
+    const descriptionInput = document.getElementById('blog-description');
 
-  if (title && content) {
-    const response = await fetch(`/api/blogs`, {
-      method: 'POST',
-      body: JSON.stringify({ title, content }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    if (titleInput && authorInput && descriptionInput) {
+      const title = titleInput.value;
+      const author = authorInput.value;
+      const description = descriptionInput.value;
 
-    if (response.ok) {
-      document.location.replace('/profile');
+      try {
+        const response = await fetch('/api/blogs', {
+          method: 'POST',
+          body: JSON.stringify({ title, author, description, userId: document.getElementById('user-id').value }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.ok) {
+          // Reload the page to see the new blog post
+          location.reload();
+        } else {
+          alert('Failed to create blog post');
+        }
+      } catch (error) {
+        console.error('Error creating blog post:', error);
+      }
     } else {
-      alert('Failed to create blog');
+      console.error('Form elements not found in the DOM');
     }
-  }
-};
+  });
 
-const delButtonHandler = async (event) => {
-  if (event.target.hasAttribute('data-id')) {
-    const id = event.target.getAttribute('data-id');
-
-    const response = await fetch(`/api/blogs/${id}`, {
-      method: 'DELETE',
+  // Add event listeners for "Add Comment" buttons
+  const addCommentButtons = document.querySelectorAll('.add-comment-btn');
+  addCommentButtons.forEach(button => {
+    button.addEventListener('click', async function(event) {
+      const blogId = button.dataset.blogId; 
+      console.log('Add comment functionality for blog ID:', blogId);
     });
-
-    if (response.ok) {
-      document.location.replace('/profile');
-    } else {
-      alert('Failed to delete blog');
-    }
-  }
-};
-
-document
-  .querySelector('.new-blog-form')
-  .addEventListener('submit', newFormHandler);
-
-document
-  .querySelector('.blog-list')
-  .addEventListener('click', delButtonHandler);
+  });
+});
