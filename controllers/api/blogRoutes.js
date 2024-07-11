@@ -1,6 +1,22 @@
 const router = require('express').Router();
-const { Blog } = require('../../models');
+const { Blog, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
+
+// GET /api/blogs - Get all blog posts with comments
+router.get('/', withAuth, async (req, res) => {
+  try {
+    const blogs = await Blog.findAll({
+      include: {
+        model: Comment,
+        attributes: ['comment_text', 'comment_author']
+      }
+    });
+    res.status(200).json(blogs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
 
 // POST /api/blogs - Create a new blog post
 router.post('/', withAuth, async (req, res) => {
