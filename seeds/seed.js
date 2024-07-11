@@ -12,11 +12,13 @@ const seedDatabase = async () => {
     returning: true,
   });
 
-  for (const blog of blogData) {
-    await Blog.create({
-      ...blog,
-    });
-  }
+  // for (const blog of blogData) {
+  //   await Blog.create({
+  //     ...blog,
+  //   });
+  // }
+
+  const blogs = await Blog.bulkCreate(blogData);
 
   process.exit(0);
 };
