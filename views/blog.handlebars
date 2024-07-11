@@ -3,8 +3,26 @@
   <p>{{{get_emoji}}}</p>
   <p>{{description}}</p>
   <p>Written by {{author}} on {{formatDate publication_date}}</p>
- 
-  <p>
-    <button class="btn btn-primary add-comment-btn" data-blog-id="{{id}}">Add Comment</button>
-  </p>
+
+  <!-- Display existing comments -->
+  <div id="comments-container">
+    {{#if comments.length}}
+      {{#each comments}}
+        <div>{{comment_text}} - User ID: {{comment_author}}</div>
+      {{/each}}
+    {{else}}
+      <p>No comments yet.</p>
+    {{/if}}
+  </div>
+
+  <!-- Form to add a new comment -->
+  <form id="comment-form">
+    <div class="form-group">
+      <label for="comment">Add Your Comment:</label>
+      <textarea class="form-control" id="comment" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Comment</button>
+  </form>
 </div>
+
+<script src="comment.js"></script>
