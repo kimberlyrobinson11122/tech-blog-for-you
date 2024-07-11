@@ -31,13 +31,12 @@
   <div class="col-md-6 blog-list">
     <h3>Your Blog Posts:</h3>
 
-    {{#if userBlogs.length}}
-      {{#each userBlogs as |blog|}}
+    {{#if blogs.length}}
+      {{#each blogs as |blog|}}
         <div class="row mb-2">
           <div class="col-md-8">
             <h4><a href="/blog/{{blog.id}}">{{blog.title}}</a></h4>
             <p>Written by {{blog.author}} on {{formatDate blog.publication_date}}</p>
-            <button class="btn btn-sm btn-secondary add-comment-btn" data-blog-id="{{blog.id}}">Add Comment</button>
           </div>
           <div class="col-md-4">
             <button class="btn btn-sm btn-danger delete-blog-btn" data-id="{{blog.id}}">DELETE</button>
