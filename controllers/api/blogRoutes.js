@@ -2,13 +2,13 @@ const router = require('express').Router();
 const { Blog, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-// GET /api/blogs - Get all blog posts with comments
+// GET /api/blogs - Get ALL blog posts with comments
 router.get('/', withAuth, async (req, res) => {
   try {
     const blogs = await Blog.findAll({
       include: {
         model: Comment,
-        attributes: ['comment_text', 'comment_author', 'blog_id', 'commentid']
+        attributes: ['comment_text', 'comment_author', 'blog_id'] 
       }
     });
     res.status(200).json(blogs);
@@ -26,7 +26,7 @@ router.post('/', withAuth, async (req, res) => {
     if (!title || !description || !author) {
       return res.status(400).json({ message: 'Title, description, and author are required fields.' });
     }
-    console.log("userid, " , req.session.user_id);
+    console.log("userid, ", req.session.user_id);
     
     // Create new blog post linked to the current user
     const newBlog = await Blog.create({
@@ -67,3 +67,4 @@ router.delete('/:id', withAuth, async (req, res) => {
 });
 
 module.exports = router;
+
