@@ -1,3 +1,7 @@
+// the model stores data and data related logic
+// All my functions that deal with the data
+// Two way communication with the data storage medium, secondary processing data
+
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
@@ -71,3 +75,26 @@ Blog.init(
 );
 
 module.exports = Blog;
+
+
+// chatgpt's answer; 
+// module.exports = (sequelize, DataTypes) => {
+//   const Blog = sequelize.define('Blog', {
+//     id: {
+//       type: DataTypes.INTEGER,
+//       primaryKey: true,
+//       autoIncrement: true
+//     },
+//     title: DataTypes.STRING,
+//     description: DataTypes.STRING,
+//     author: DataTypes.STRING,
+//     publication_date: DataTypes.DATE,
+//     user_id: DataTypes.INTEGER
+//   });
+
+//   Blog.associate = function(models) {
+//     Blog.hasMany(models.Comment, { foreignKey: 'blog_id' });
+//   };
+
+//   return Blog;
+// };
