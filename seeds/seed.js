@@ -11,13 +11,6 @@ const seedDatabase = async () => {
     individualHooks: true,
     returning: true,
   });
-
-  // for (const blog of blogData) {
-  //   await Blog.create({
-  //     ...blog,
-  //   });
-  // }
-
   const blogs = await Blog.bulkCreate(blogData);
 
   process.exit(0);
