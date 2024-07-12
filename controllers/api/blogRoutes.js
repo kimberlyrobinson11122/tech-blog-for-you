@@ -8,7 +8,7 @@ router.get('/', withAuth, async (req, res) => {
     const blogs = await Blog.findAll({
       include: {
         model: Comment,
-        attributes: ['comment_text', 'comment_author']
+        attributes: ['comment_text', 'comment_author', 'blog_id', 'commentid']
       }
     });
     res.status(200).json(blogs);

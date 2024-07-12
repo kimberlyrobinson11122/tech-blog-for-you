@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Blog, User } = require('../models');
+const { Blog, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 // Route to render homepage with all blogs
@@ -76,7 +76,7 @@ router.get('/profile', withAuth, async (req, res) => {
     // Find all blogs belonging to the logged-in user
     const blogData = await Blog.findAll({
       where: { user_id: req.session.user_id },
-      include: [{ model: User, attributes: ['name'] }],
+      include: [{ model: User, attributes: ['name'], model: Comment, attributes: [' created_by'] }],
     });
 
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
@@ -84,6 +84,7 @@ router.get('/profile', withAuth, async (req, res) => {
     res.render('profile', {
       ...user,
       blogs,
+      comment,
       logged_in: true
     });
   } catch (err) {
