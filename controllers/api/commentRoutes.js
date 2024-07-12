@@ -5,13 +5,17 @@ const withAuth = require('../../utils/auth');
 // POST new comment
 router.post('/', withAuth, async (req, res) => {
     try {
+        const { user_id, comment_text, blog_id } = req.body; // Destructure the required fields from req.body
+
         const newComment = await Comment.create({
-            ...req.body,
-            user_id: req.session.user_id,
-            blog_id: req.body.blog_id 
+            user_id,
+            comment_text,
+            blog_id,
         });
+
         res.status(200).json(newComment);
     } catch (err) {
+        console.error('Error creating comment:', err.message);
         res.status(400).json({ error: 'Failed to create comment' });
     }
 });
@@ -32,5 +36,7 @@ router.delete('/:id', withAuth, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+
 
 module.exports = router;
