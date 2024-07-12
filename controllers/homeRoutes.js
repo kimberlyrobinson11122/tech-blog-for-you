@@ -1,11 +1,14 @@
+// this is what is inbetween
+// user authentication, everything that makes your program do something interesting
+// the controller is business logic, is the glue between the data from the model transforms it for to the view
+// also takes instructions form the view and manipulates the data accordingly
+
 const router = require('express').Router();
-const { Blog, User, Comment } = require('../models');
+const { Blog, User, Comment, Profile } = require('../models');
 const withAuth = require('../utils/auth');
 
-// Route to render homepage with all blogs
 router.get('/', async (req, res) => {
   try {
-    // Get all blogs and JOIN with user data
     const blogData = await Blog.findAll({
       include: [
         {
@@ -15,21 +18,18 @@ router.get('/', async (req, res) => {
       ],
     });
 
-    // Serialize data so the template can read it
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
 
-    // Pass serialized data and session flag into template
     res.render('homepage', { 
       blogs, 
       logged_in: req.session.logged_in 
     });
   } catch (err) {
-    console.error(err); // Log the error for debugging
-    res.status(500).json(err); // Handle the error appropriately
+    console.error(err);
+    res.status(500).json(err);
   }
 });
 
-// Route to render a single blog post
 router.get('/blog/:id', async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id, {
@@ -38,6 +38,10 @@ router.get('/blog/:id', async (req, res) => {
           model: User,
           attributes: ['name'],
         },
+        {
+          model: Comment,
+          attributes: ['comment_text', 'comment_author'] 
+        }
       ],
     });
 
@@ -53,15 +57,13 @@ router.get('/blog/:id', async (req, res) => {
       logged_in: req.session.logged_in
     });
   } catch (err) {
-    console.error(err); // Log the error for debugging
-    res.status(500).json(err); // Handle the error appropriately
+    console.error(err);
+    res.status(500).json(err);
   }
 });
 
-// Route to render user profile
 router.get('/profile', withAuth, async (req, res) => {
   try {
-    // Find the logged-in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
     });
@@ -73,29 +75,25 @@ router.get('/profile', withAuth, async (req, res) => {
 
     const user = userData.get({ plain: true });
 
-    // Find all blogs belonging to the logged-in user
     const blogData = await Blog.findAll({
       where: { user_id: req.session.user_id },
-      include: [{ model: User, attributes: ['name'], model: Comment, attributes: [' created_by'] }],
+      include: [{ model: User, attributes: ['name'] }, { model: Comment, attributes: ['comment_text', 'comment_author'] }],
     });
 
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
-    console.log("blogs ", blogs)
+
     res.render('profile', {
       ...user,
       blogs,
-      comment,
       logged_in: true
     });
   } catch (err) {
-    console.error(err); // Log the error for debugging
-    res.status(500).json(err); // Handle the error appropriately
+    console.error(err);
+    res.status(500).json(err);
   }
 });
 
-// Route to render login page
 router.get('/login', (req, res) => {
-  // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
     res.redirect('/profile');
     return;
