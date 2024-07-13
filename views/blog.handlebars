@@ -3,12 +3,13 @@
   <p>{{{get_emoji}}}</p>
   <p>{{description}}</p>
   <p>Written by {{author}} on {{formatDate publication_date}}</p>
+  <p id="blog-id" style="display: none">{{id}}</p>
 
   <!-- Display existing comments -->
   <div id="comments-container">
     {{#if comments.length}}
       {{#each comments}}
-        <div>{{comment_text}} - User ID: {{comment_author}}</div>
+        <div>{{comment_text}} - Author: {{comment_author}}</div>
       {{/each}}
     {{else}}
       <p>No comments yet.</p>
