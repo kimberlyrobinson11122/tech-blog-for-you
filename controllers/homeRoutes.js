@@ -1,8 +1,3 @@
-// this is what is inbetween
-// user authentication, everything that makes your program do something interesting
-// the controller is business logic, is the glue between the data from the model transforms it for to the view
-// also takes instructions form the view and manipulates the data accordingly
-
 const router = require('express').Router();
 const { Blog, User, Comment, Profile } = require('../models');
 const withAuth = require('../utils/auth');
