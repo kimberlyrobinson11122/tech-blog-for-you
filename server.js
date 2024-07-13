@@ -18,7 +18,7 @@ const hbs = exphbs.create({
 });
 
 const sess = {
-  secret: 'Super secret secret',
+  secret: process.env.SESSION_SECRET || 'Super secret secret',
   cookie: {
     maxAge: 60 * 60 * 1000,
     httpOnly: true,
@@ -35,7 +35,7 @@ const sess = {
 app.use(session(sess));
 
 // Set up Handlebars as the view engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use(express.json());
