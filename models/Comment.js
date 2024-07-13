@@ -26,8 +26,16 @@ Comment.init(
         model: 'blog',
         key: 'id',
       },
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
   },
-},
   {
     sequelize,
     timestamps: false,
