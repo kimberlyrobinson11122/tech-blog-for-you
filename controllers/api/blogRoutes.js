@@ -45,6 +45,9 @@ router.post('/', withAuth, async (req, res) => {
 
 // DELETE /api/blogs/:id - Delete a blog post by id
 router.delete('/:id', withAuth, async (req, res) => {
+  // const { id } = req.params;
+  // count from 0
+  // const blogNumber = id - 1;
   try {
     // Ensure the blog post exists and belongs to the current user
     const blogData = await Blog.destroy({

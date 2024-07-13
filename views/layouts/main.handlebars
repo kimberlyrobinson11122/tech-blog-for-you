@@ -1,9 +1,5 @@
-{{!-- views shows what the user is interacting with --}}
-{{!-- Depends on what you are doing --}}
-{{!-- View file, displaying information and various actions to the user (crone - header, footer - MAIN--}}
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8">
@@ -21,9 +17,9 @@
         <a href="/">Tech Blog For You</a>
       </h1>
       <nav>
-        <!-- Conditionally render login or logout links -->
+        {{!Conditionally render login or logout links}}
         {{#if logged_in}}
-        <a href="/profile">Dashboard</a> | <!-- route for user profile -->
+        <a href="/profile">Dashboard</a> 
         <button class="no-button" id="logout">Logout</button>
         {{else}}
         <a href="/login">Login</a>
@@ -31,7 +27,7 @@
       </nav>
     </header>
     <main class="container container-fluid mt-5">
-      <!-- this renders the sub layout -->
+      {{!this renders the sub layout}}
       {{{ body }}}
     </main>
     <footer>
@@ -39,7 +35,7 @@
     </footer>
   </div>
 
-  <!-- Render script for logged in users only -->
+  {{!Render script for logged in users only}}
   {{#if logged_in}}
   <script src="/js/logout.js"></script>
   {{/if}}

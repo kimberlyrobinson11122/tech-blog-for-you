@@ -1,3 +1,4 @@
+{{!-- blog --}}
 <div class="text-center">
   <h2>{{title}}</h2>
   <p>{{{get_emoji}}}</p>
@@ -5,7 +6,7 @@
   <p>Written by {{author}} on {{formatDate publication_date}}</p>
   <p id="blog-id" style="display: none">{{id}}</p>
 
-  <!-- Display existing comments -->
+  {{! Display existing comments }}
   <div id="comments-container">
     {{#if comments.length}}
       {{#each comments}}
@@ -16,7 +17,7 @@
     {{/if}}
   </div>
 
-  <!-- Form to add a new comment -->
+  {{! Form to add a new comment }}
   <form id="comment-form">
     <div class="form-group">
       <label for="comment">Add Your Comment:</label>
