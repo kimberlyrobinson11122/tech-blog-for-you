@@ -1,7 +1,6 @@
 const User = require('./User');
 const Blog = require('./Blog');
 const Comment = require('./Comment');
-const Profile = require('./Profile'); // Import the Profile model
 
 // User has many Blogs
 User.hasMany(Blog, {
@@ -25,15 +24,4 @@ Comment.belongsTo(Blog, {
   foreignKey: 'blog_id'
 });
 
-// Profile associations
-Profile.hasMany(Blog, {
-  foreignKey: 'user_id',
-  onDelete: 'CASCADE'
-});
-
-Profile.hasMany(Comment, {
-  foreignKey: 'user_id',
-  onDelete: 'CASCADE'
-});
-
-module.exports = { User, Blog, Comment, Profile };
+module.exports = { User, Blog, Comment };
