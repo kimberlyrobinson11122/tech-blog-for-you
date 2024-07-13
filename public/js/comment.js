@@ -1,6 +1,7 @@
 const submitComment = async () => {
   try {
     const comment = document.querySelector('#comment').value;
+    const blog_id = document.querySelector('#blog-id').textContent;
 
     // Check if the user-id element exists before accessing its value
     const userIdElement = document.getElementById('user-id');
@@ -14,20 +15,14 @@ const submitComment = async () => {
       body: JSON.stringify({
         user_id: userId, // Updated key to match the server's expected key
         comment_text: comment, // Updated key to match the server's expected key
+        blog_id: blog_id, // Updated key to match the server's expected key
       }),
     });
 
     if (response.ok) {
       const data = await response.json();
+      window.location.reload();
 
-      // Display comment on the blog page
-      const commentContainer = document.querySelector('#comments-container');
-      const commentDiv = document.createElement('div');
-      commentDiv.textContent = `${data.comment_text} - User ID: ${data.user_id}`;
-      commentContainer.appendChild(commentDiv);
-
-      // Clear comment input field
-      document.querySelector('#comment').value = '';
     } else {
       throw new Error('Failed to post comment');
     }
