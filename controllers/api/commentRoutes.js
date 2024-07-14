@@ -4,10 +4,13 @@ const withAuth = require('../../utils/auth');
 
 // POST new comment
 router.post('/', withAuth, async (req, res) => {
-    console.log('Hitting the new comment route');
     try {
         const { comment_text, blog_id } = req.body;
         const user_id = req.session.user_id;
+
+        if (!comment_text || !blog_id) {
+            return res.status(400).json({ error: 'Comment text and blog ID are required' });
+        }
 
         const newComment = await Comment.create({
             user_id,
@@ -21,26 +24,29 @@ router.post('/', withAuth, async (req, res) => {
         res.status(201).json(newComment); // Use status 201 for successful creation
     } catch (err) {
         console.error('Error creating comment:', err.message);
-        res.status(400).json({ error: 'Failed to create comment' });
+        res.status(500).json({ error: 'Failed to create comment' });
     }
 });
 
 // DELETE comment
 router.delete('/:id', withAuth, async (req, res) => {
-    console.log(id)
     try {
-        const commentData = await Comment.findByPk(req.params.id);
+        const commentId = req.params.id;
+        const commentData = await Comment.findByPk(commentId);
+
         if (!commentData) {
             return res.status(404).json({ error: 'Comment not found' });
         }
+
         if (commentData.user_id !== req.session.user_id) {
             return res.status(401).json({ error: 'Unauthorized to delete this comment' });
         }
+
         await commentData.destroy();
         res.status(200).json({ message: 'Comment deleted' });
     } catch (err) {
         console.error('Error deleting comment:', err.message);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: 'Failed to delete comment' });
     }
 });
 
